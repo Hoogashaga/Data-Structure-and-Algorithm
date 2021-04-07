@@ -22,16 +22,34 @@ public class LinkedIntListProblems {
      * Reverses the 3 elements in the `LinkedIntList` (assume there are exactly 3 elements).
      */
     public static void reverse3(LinkedIntList list) {
-        // TODO replace this with your code
-        throw new UnsupportedOperationException("Not implemented yet.");
+        ListNode firstNode = list.front.next.next;
+        ListNode secondNode = list.front.next;
+        ListNode thirdNode = list.front;
+        list.front = firstNode;
+        list.front.next = secondNode;
+        list.front.next.next = thirdNode;
+        list.front.next.next.next = null;
     }
 
     /**
      * Moves the first element of the input list to the back of the list.
      */
     public static void firstToLast(LinkedIntList list) {
-        // TODO replace this with your code
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (list.front == null) {
+            return;
+        }
+        if (list.front.next == null) {
+            return;
+        }
+
+        ListNode first = list.front;
+        ListNode second = list.front.next;
+        first.next = null;
+        list.front = second;
+        while (second.next != null) {
+            second= second.next;
+        }
+        second.next = first;
     }
 
     /**
@@ -40,7 +58,32 @@ public class LinkedIntListProblems {
      */
     public static LinkedIntList concatenate(LinkedIntList a, LinkedIntList b) {
         // Hint: you'll need to use the 'new' keyword to construct new objects.
-        // TODO replace this with your code
-        throw new UnsupportedOperationException("Not implemented yet.");
+        LinkedIntList c = new LinkedIntList();
+        if (b.front == null) {
+            c.front = a.front;
+            // return c;
+        }
+        if (a.front == null) {
+            c.front = b.front;
+            // return c;
+        }
+        if (a.front != null && b.front != null) {
+            c.front = a.front;
+            ListNode cur = a.front;
+            ListNode bcur = b.front;
+            ListNode ccur = c.front;
+            while (cur.next != null) {
+                ccur.next = cur.next;
+                ccur = ccur.next;
+                cur = cur.next;
+            }
+            ccur.next = bcur;
+            while (bcur.next != null) {
+                ccur.next = bcur.next;
+                ccur = ccur.next;
+                bcur = bcur.next;
+            }
+        }
+        return c;
     }
 }
