@@ -15,8 +15,7 @@ public class ArrayProblems {
      */
     @SuppressWarnings("checkstyle:WhitespaceAround")
     public static String toString(int[] array) {
-        // TODO replace this with your code
-        if (array.length == 0){
+        if (array.length == 0) {
             return "[]";
         }
 
@@ -37,12 +36,11 @@ public class ArrayProblems {
      */
     @SuppressWarnings("checkstyle:WhitespaceAround")
     public static int[] reverse(int[] array) {
-        // TODO replace this with your code
         int i = 0;
         int j = array.length - 1;
         int[] reversedArray = new int[j+1];
 
-        for (int index = j; 0 <= index; index--){
+        for (int index = j; 0 <= index; index--) {
             reversedArray[i] = array[index];
             i += 1;
         }
@@ -55,14 +53,13 @@ public class ArrayProblems {
      * Rotates the values in the array to the right.
      */
     public static void rotateRight(int[] array) {
-        // TODO replace this with your code
-        if(array.length == 0){
+        if (array.length == 0) {
             array = array;
         }
-        else{
+        else {
             int j = array.length - 1;
             int tmp = array[j];
-            for (int index = j; index > 0; index--){
+            for (int index = j; index > 0; index--) {
                 array[index] = array[index-1];
             }
             array[0] = tmp;
