@@ -58,32 +58,31 @@ public class LinkedIntListProblems {
      */
     public static LinkedIntList concatenate(LinkedIntList a, LinkedIntList b) {
         // Hint: you'll need to use the 'new' keyword to construct new objects.
-        LinkedIntList c = new LinkedIntList();
-        if (b.front == null) {
-            c.front = a.front;
-            // return c;
-        }
-        if (a.front == null) {
+        ListNode p = a.front;
+        int i = 0;
+        if (p == null) {
+            LinkedIntList c = new LinkedIntList();
             c.front = b.front;
-            // return c;
+            return c;
         }
-        if (a.front != null && b.front != null) {
-            c.front = a.front;
+        else {
+            while (p.next != null) {
+                p = p.next;
+                i++;
+            }
             ListNode cur = a.front;
-            ListNode bcur = b.front;
-            ListNode ccur = c.front;
-            while (cur.next != null) {
-                ccur.next = cur.next;
-                ccur = ccur.next;
+            int[] value = new int[i + 1];
+            for (int j = 0; j < i + 1; j++) {
+                value[j] = cur.data;
                 cur = cur.next;
             }
-            ccur.next = bcur;
-            while (bcur.next != null) {
-                ccur.next = bcur.next;
-                ccur = ccur.next;
-                bcur = bcur.next;
+            LinkedIntList d = new LinkedIntList(value);
+            ListNode c = d.front;
+            while (c.next != null) {
+                c = c.next;
             }
+            c.next = b.front;
+            return d;
         }
-        return c;
     }
 }
