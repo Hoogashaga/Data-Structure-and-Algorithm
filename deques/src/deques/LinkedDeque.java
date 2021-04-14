@@ -23,17 +23,19 @@ public class LinkedDeque<T> extends AbstractDeque<T> {
         Node<T> temp = new Node<>(item);
         temp.prev = front;
         temp.next = front.next;
-        front.next.prev = temp;
         front.next = temp;
+        temp.next.prev = temp;
+
     }
 
     public void addLast(T item) {
         size += 1;
         Node<T> temp = new Node<>(item);
         temp.next = back;
-        back.prev.next = temp;
         temp.prev = back.prev;
         back.prev = temp;
+        temp.prev.next = temp;
+
     }
 
     public T removeFirst() {
@@ -42,8 +44,11 @@ public class LinkedDeque<T> extends AbstractDeque<T> {
         }
         size -= 1;
         Node<T> first = front.next;
-        front.next = first.next;
-        first.next.prev = front;
+        Node<T> first2 = front.next.next;
+        front.next = first2;
+        first2.prev = front;
+        // front.next = first.next;
+        // first.next.prev = front;
         return first.value;
     }
 
@@ -63,14 +68,26 @@ public class LinkedDeque<T> extends AbstractDeque<T> {
         if ((index >= size) || (index < 0)) {
             return null;
         }
-        if (size == 0) {
-            return null;
+        if (index == 0) {
+            return front.next.value;
         }
-        int cnt = 0;
-        Node<T> cur = front.next;
-        while (index > 0) {
-            cur = cur.next;
-            index -= 1;
+        int mid = size / 2;
+
+        Node<T> cur;
+        if (index < mid) {
+            cur = front;
+            int cnt = 0;
+            while (cnt <= index) {
+                cur = cur.next;
+                cnt += 1;
+            }
+        } else {
+            cur = back;
+            int cnt = size - 1;
+            while (cnt >= index) {
+                cur = cur.prev;
+                cnt -= 1;
+            }
         }
         return cur.value;
     }
