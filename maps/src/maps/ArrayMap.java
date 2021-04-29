@@ -90,12 +90,13 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
         }
         for (int i = 0; i < size; i++) {
             if (entries[i].getKey().equals(key)) {
-                V tmp = entries[i].getValue();
+                V old = entries[i].getValue();
                 entries[i].setValue(value);
-                return tmp;
+                return old;
             }
         }
-        entries[size] = new SimpleEntry<>(key, value);
+        SimpleEntry<K, V> newEntry = new SimpleEntry<>(key, value);
+        entries[size] = newEntry;
         size++;
         return null;
     }
