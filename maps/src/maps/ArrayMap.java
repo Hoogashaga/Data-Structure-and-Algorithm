@@ -164,7 +164,7 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
         // You may add more fields and constructor parameters
         // private SimpleEntry<K, V> cur;
         int i;
-        int pairsSize;
+        int entrySize;
 
 
 
@@ -172,23 +172,22 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
             this.entries = entries;
 
             this.i = 0;
-            this.pairsSize = size;
+            this.entrySize = size;
         }
 
         @Override
         public boolean hasNext() {
-            return !(this.i >= this.pairsSize);
+            return (this.i < this.entrySize);
         }
 
         @Override
         public Entry<K, V> next() {
-            if (this.hasNext()) {
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            } else {
                 SimpleEntry<K, V> tmp = entries[i];
                 i++;
                 return tmp;
-            }
-            else {
-                throw new NoSuchElementException();
             }
         }
     }
