@@ -136,14 +136,14 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
     public V remove(Object key) {
         int hashcode;
         if (key != null) {
-            hashcode = Math.abs(key.hashCode() % chains.length);
+            hashcode = Math.abs(key.hashCode()) % chains.length;
         } else {
             hashcode = 0;
         }
-        if (!chains[hashcode].containsKey(key)) {
+        if (chains[hashcode] == null || !chains[hashcode].containsKey(key)) {
             return null;
         } else {
-            size--;
+            this.size--;
             return chains[hashcode].remove(key);
         }
     }
