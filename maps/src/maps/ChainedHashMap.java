@@ -90,7 +90,7 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
             hashcode = 0;
         }
 
-        if (chains[hashcode] == null || !containsKey(key)) {
+        if (!containsKey(key) || chains[hashcode] == null) {
             return null;
         } else {
             return chains[hashcode].get(key);
@@ -121,6 +121,9 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
             int length = newChains.length;
             for (Map.Entry<K, V> item : this) {
                 int newHash = item.getKey().hashCode();
+                if (newHash < 0) {
+                    newHash = Math.abs(newHash);
+                }
                 int mod = newHash % length;
                 if (newChains[mod] == null) {
                     newChains[mod] = new ArrayMap<>();
