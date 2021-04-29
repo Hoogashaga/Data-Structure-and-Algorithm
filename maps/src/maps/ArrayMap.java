@@ -69,7 +69,7 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
     @Override
     public V get(Object key) {
         for (int i = 0; i < size; i++) {
-           if (Objects.equals(entries[i].getKey(), key)) {
+           if (Objects.equals(entries[i].getKey(), key) || entries[i].getKey() == key) {
                 return entries[i].getValue();
            }
         }
@@ -78,16 +78,17 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
 
     @Override
     public V put(K key, V value) {
-        if (this.size == this.initialCapacity) {
-            SimpleEntry<K, V>[] newEntries = this.createArrayOfEntries(this.initialCapacity * 2);
+        if (size == initialCapacity) {
+            int newCapacity = initialCapacity * 2;
+            SimpleEntry<K, V>[] newEntries = createArrayOfEntries(newCapacity);
             for (int i = 0; i < initialCapacity; i++) {
                 newEntries[i] = entries[i];
             }
-            this.entries = newEntries;
-            this.initialCapacity *= 2;
+            entries = newEntries;
+            initialCapacity *= 2;
         }
-        for (int i = 0; i < this.size; i++) {
-            if (Objects.equals(this.entries[i].getKey(), key)) {
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(entries[i].getKey(), key) || entries[i].getKey() == key) {
                 V old = entries[i].getValue();
                 entries[i].setValue(value);
                 return old;
@@ -103,7 +104,7 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
     @Override
     public V remove(Object key) {
         for (int i = 0; i < size; i++) {
-            if (Objects.equals(this.entries[i].getKey(), key)) {
+            if (Objects.equals(entries[i].getKey(), key) || entries[i].getKey() == key) {
                 V tmp = entries[i].getValue();
                 entries[i] = entries[size - 1];
                 entries[size - 1] = null;
@@ -115,18 +116,22 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
     }
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++) {
+        int i = 0;
+        while (i < size) {
             entries[i] = null;
+            i++;
             }
         size = 0;
     }
 
     @Override
     public boolean containsKey(Object key) {
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(this.entries[i].getKey(), key)) {
+        int i = 0;
+        while (i < size) {
+            if (Objects.equals(this.entries[i].getKey(), key) || entries[i].getKey() == key) {
                 return true;
             }
+            i++;
         }
         return false;
     }
