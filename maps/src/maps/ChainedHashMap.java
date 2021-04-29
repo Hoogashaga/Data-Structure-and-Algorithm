@@ -143,9 +143,8 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
         if (!chains[hashcode].containsKey(key)) {
             return null;
         } else {
-            V value = chains[hashcode].remove(key);
             size--;
-            return value;
+            return chains[hashcode].remove(key);
         }
     }
 
