@@ -140,12 +140,12 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
         } else {
             hashcode = 0;
         }
-        if (chains[hashcode].containsKey(key)) {
+        if (!chains[hashcode].containsKey(key)) {
+            return null;
+        } else {
             V value = chains[hashcode].remove(key);
             size--;
             return value;
-        } else {
-            return null;
         }
     }
 
@@ -169,8 +169,10 @@ public class ChainedHashMap<K, V> extends AbstractIterableMap<K, V> {
         } else {
             hashcode = 0;
         }
-        res = chains[hashcode].containsKey(key);
-        return res;
+        if (chains[hashcode] == null) {
+            return false;
+        }
+        return chains[hashcode].containsKey(key);
     }
 
     @Override
