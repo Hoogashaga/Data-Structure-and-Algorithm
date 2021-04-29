@@ -107,10 +107,10 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
     @Override
     public V remove(Object key) {
         for (int i = 0; i < size; i++) {
-            if ((key == null && entries[i].getKey() == null) ||
-                (entries[i].getKey().equals(key))) {
+            if (entries[i].getKey().equals(key)) {
                 V tmp = entries[i].getValue();
                 entries[i] = new SimpleEntry<>(entries[size - 1].getKey(), entries[size - 1].getValue());
+                entries[size - 1] = null;
                 size--;
                 return tmp;
             }
