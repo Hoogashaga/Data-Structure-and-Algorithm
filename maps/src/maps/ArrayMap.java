@@ -79,7 +79,11 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
     @Override
     public V put(K key, V value) {
         if (this.size == this.initialCapacity) {
-            this.entries = resize(this.initialCapacity);
+            SimpleEntry<K, V>[] newEntries = this.createArrayOfEntries(this.initialCapacity * 2);
+            for (int i = 0; i < initialCapacity; i++) {
+                newEntries[i] = entries[i];
+            }
+            this.entries = newEntries;
             this.initialCapacity *= 2;
         }
         for (int i = 0; i < this.size; i++) {
@@ -93,14 +97,6 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
         entries[size] = newEntry;
         size++;
         return null;
-    }
-
-    private SimpleEntry<K, V>[] resize(int oldCapacity) {
-        SimpleEntry<K, V>[] newEntries = this.createArrayOfEntries(oldCapacity * 2);
-        for (int i = 0; i < oldCapacity; i++) {
-            newEntries[i] = entries[i];
-        }
-        return newEntries;
     }
 
     @SuppressWarnings("checkstyle:EmptyBlock")
