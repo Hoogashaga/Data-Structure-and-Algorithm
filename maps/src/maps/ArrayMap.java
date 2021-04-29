@@ -3,6 +3,7 @@ package maps;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * @see AbstractIterableMap
@@ -80,16 +81,12 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
 
     @Override
     public V put(K key, V value) {
-        if (size == initialCapacity) {
-            initialCapacity = initialCapacity * 2;
-            SimpleEntry<K, V>[] newArray = this.createArrayOfEntries(initialCapacity);
-            for (int i = 0; i < size; i++) {
-                newArray[i] = new SimpleEntry<>(entries[i].getKey(), entries[i].getValue());
-            }
-            entries = newArray;
+        if (this.size == this.initialCapacity) {
+            this.entries = resize(this.initialCapacity);
+            this.initialCapacity *= 2;
         }
-        for (int i = 0; i < size; i++) {
-            if (entries[i].getKey().equals(key)) {
+        for (int i = 0; i < this.size; i++) {
+            if (Objects.equals(this.entries[i].getKey(), key)) {
                 V old = entries[i].getValue();
                 entries[i].setValue(value);
                 return old;
@@ -99,6 +96,14 @@ public class ArrayMap<K, V> extends AbstractIterableMap<K, V> {
         entries[size] = newEntry;
         size++;
         return null;
+    }
+
+    private SimpleEntry<K, V>[] resize(int oldCapacity) {
+        SimpleEntry<K, V>[] newEntries = this.createArrayOfEntries(oldCapacity * 2);
+        for (int i = 0; i < oldCapacity; i++) {
+            newEntries[i] = entries[i];
+        }
+        return newEntries;
     }
 
     @SuppressWarnings("checkstyle:EmptyBlock")
