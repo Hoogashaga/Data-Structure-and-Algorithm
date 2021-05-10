@@ -31,12 +31,12 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      * A helper method for swapping the items at two indices of the array heap.
      */
     private void swap(int a, int b) {
-        PriorityNode<T> node1 = items.get(a);
-        PriorityNode<T> node2 = items.get(b);
-        map.put(node1.getItem(), b);
-        map.put(node2.getItem(), a);
-        items.set(a, node2);
-        items.set(b, node1);
+        PriorityNode<T> n1 = items.get(a);
+        PriorityNode<T> n2 = items.get(b);
+        items.set(a, n2);
+        items.set(b, n1);
+        map.put(n1.getItem(), b);
+        map.put(n2.getItem(), a);
     }
 
     @Override
