@@ -4,10 +4,11 @@ import disjointsets.DisjointSets;
 import disjointsets.QuickFindDisjointSets;
 import graphs.BaseEdge;
 import graphs.KruskalGraph;
-
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Computes minimum spanning trees using Kruskal's algorithm.
@@ -31,6 +32,7 @@ public class KruskalMinimumSpanningTreeFinder<G extends KruskalGraph<V, E>, V, E
          */
     }
 
+    @SuppressWarnings("checkstyle:NeedBraces")
     @Override
     public MinimumSpanningTree<V, E> findMinimumSpanningTree(G graph) {
         // Here's some code to get you started; feel free to change or rearrange it if you'd like.
@@ -41,7 +43,31 @@ public class KruskalMinimumSpanningTreeFinder<G extends KruskalGraph<V, E>, V, E
 
         DisjointSets<V> disjointSets = createDisjointSets();
 
-        // TODO: replace this with your code
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (edges.size() == 0) {
+            return new MinimumSpanningTree.Success<>();
+        }
+        int n = 0;
+        Set<E> mst = new HashSet<>();
+        if (graph.allVertices().size() == 0) {
+            return new MinimumSpanningTree.Success<>();
+        }
+        for (V v: graph.allVertices()) {
+            disjointSets.makeSet(v);
+            n++;
+        }
+        for (E edge : edges) {
+            V v1 = edge.from();
+            V v2 = edge.to();
+            if (disjointSets.findSet(v1) != disjointSets.findSet(v2)) {
+                disjointSets.union(v1, v2);
+                mst.add(edge);
+            }
+        }
+        if (mst.size() == (n - 1)) {
+            return new MinimumSpanningTree.Success<>(mst);
+        } else {
+            return new MinimumSpanningTree.Failure<>();
+        }
     }
+    //
 }
