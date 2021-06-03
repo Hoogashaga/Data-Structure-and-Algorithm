@@ -45,15 +45,15 @@ public class UnionBySizeCompressingDisjointSets<T> implements DisjointSets<T> {
         if (!this.ids.containsKey(item)) {
             throw new IllegalArgumentException();
         }
-    //     int index = this.ids.get(item);
-    //     return findSetHelper(index);
-    // }
-    //
-    // private int findSetHelper(int index) {
-    //     if (this.pointers.get(index) < 0) {
-    //         return index;
-    //     }
-    //     return findSetHelper(this.pointers.get(index));
+        //     int index = this.ids.get(item);
+        //     return findSetHelper(index);
+        // }
+        //
+        // private int findSetHelper(int index) {
+        //     if (this.pointers.get(index) < 0) {
+        //         return index;
+        //     }
+        //     return findSetHelper(this.pointers.get(index));
         int index = ids.get(item);
         while (this.pointers.get(index) >= 0) {
             index = this.pointers.get(index);
