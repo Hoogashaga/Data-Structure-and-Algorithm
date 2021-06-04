@@ -45,26 +45,32 @@ public class UnionBySizeCompressingDisjointSets<T> implements DisjointSets<T> {
         if (!this.ids.containsKey(item)) {
             throw new IllegalArgumentException();
         }
-        //     int index = this.ids.get(item);
-        //     return findSetHelper(index);
+            int index = this.ids.get(item);
+            return findSetHelper(index, item);
+        }
+
+        private int findSetHelper(int index, T item) {
+            if (this.pointers.get(index) < 0) {
+                int temp = ids.get(item);
+                while (this.pointers.get(temp) >= 0) {
+                    int cur = pointers.get(temp);
+                    pointers.set(temp, index);
+                    temp = cur;
+                }
+                return index;
+            }
+            return findSetHelper(this.pointers.get(index), item);
+        // int index = ids.get(item);
+        // while (this.pointers.get(index) >= 0) {
+        //     index = this.pointers.get(index);
         // }
-        //
-        // private int findSetHelper(int index) {
-        //     if (this.pointers.get(index) < 0) {
-        //         return index;
-        //     }
-        //     return findSetHelper(this.pointers.get(index));
-        int index = ids.get(item);
-        while (this.pointers.get(index) >= 0) {
-            index = this.pointers.get(index);
-        }
-        int temp = ids.get(item);
-        while (this.pointers.get(temp) >= 0) {
-            int curr = pointers.get(temp);
-            pointers.set(temp, index);
-            temp = curr;
-        }
-        return index;
+        // int temp = ids.get(item);
+        // while (this.pointers.get(temp) >= 0) {
+        //     int curr = pointers.get(temp);
+        //     pointers.set(temp, index);
+        //     temp = curr;
+        // }
+        // return index;
     }
 
     @Override
