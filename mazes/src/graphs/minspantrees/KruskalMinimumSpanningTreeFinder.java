@@ -52,7 +52,7 @@ public class KruskalMinimumSpanningTreeFinder<G extends KruskalGraph<V, E>, V, E
             return new MinimumSpanningTree.Success<>();
         }
         if (graph.allVertices().size() == 2 && edges.size() == 0) {
-                return new MinimumSpanningTree.Failure<>();
+            return new MinimumSpanningTree.Success<>();
             }
 
         for (V v: graph.allVertices()) {
