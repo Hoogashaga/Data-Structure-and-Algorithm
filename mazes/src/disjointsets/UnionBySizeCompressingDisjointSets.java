@@ -60,18 +60,6 @@ public class UnionBySizeCompressingDisjointSets<T> implements DisjointSets<T> {
                 return index;
             }
             return findSetHelper(this.pointers.get(index), item);
-
-            // int index = ids.get(item);
-            // while (this.pointers.get(index) >= 0) {
-            //     index = this.pointers.get(index);
-            // }
-            // int temp = ids.get(item);
-            // while (this.pointers.get(temp) >= 0) {
-            //     int curr = pointers.get(temp);
-            //     pointers.set(temp, index);
-            //     temp = curr;
-            // }
-            // return index;
     }
 
     @Override
