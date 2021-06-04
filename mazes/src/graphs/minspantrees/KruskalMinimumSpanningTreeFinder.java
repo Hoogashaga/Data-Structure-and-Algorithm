@@ -55,8 +55,6 @@ public class KruskalMinimumSpanningTreeFinder<G extends KruskalGraph<V, E>, V, E
                 return new MinimumSpanningTree.Failure<>();
             }
 
-
-
         for (V v: graph.allVertices()) {
             disjointSets.makeSet(v);
             n++;
