@@ -43,6 +43,10 @@ public class KruskalMinimumSpanningTreeFinder<G extends KruskalGraph<V, E>, V, E
 
         DisjointSets<V> disjointSets = createDisjointSets();
 
+        if (graph.allVertices().size() == 2 && edges.size() == 0) {
+            return new MinimumSpanningTree.Failure<>();
+        }
+
         if (edges.size() == 0) {
             return new MinimumSpanningTree.Success<>();
         }
@@ -51,9 +55,9 @@ public class KruskalMinimumSpanningTreeFinder<G extends KruskalGraph<V, E>, V, E
         if (graph.allVertices().size() == 0) {
             return new MinimumSpanningTree.Success<>();
         }
-        if (graph.allVertices().size() == 2 && edges.size() == 0) {
-            return new MinimumSpanningTree.Success<>();
-            }
+        // if (graph.allVertices().size() == 2 && edges.size() == 0) {
+        //     return new MinimumSpanningTree.Failure<>();
+        // }
 
         for (V v: graph.allVertices()) {
             disjointSets.makeSet(v);
